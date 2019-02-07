@@ -50,60 +50,58 @@ int main (int argc, char *argv[]){
 		int density = strtol(argv[3], &p, 0);
 		char array[size][size]; //create array based on what user entered
 		struct near adjacent[size][size];
-		for (n=0; n<size; n++){ //for loop, size-number of iterations
-			for (i=0; i<size; i++){ //secondary for loop with the same number
+		for (n=0; n<size; n++){ //for loop, size-number of iterations //n is ROWS
+			for (i=0; i<size; i++){ //secondary for loop with the same number //i IS COLUMNS
 				array[n][i] = genTree(perc, density); //put tree into the array
 				printf("%c", array[n][i]); //print array at that point
-				if (i>0){
-					adjacent[n][i].N = array[n][i-1];
+				if (n>0){ //N
+					adjacent[n][i].N = array[n-1][i];
 				}
 				else {
 					adjacent[n][i].N = '0';
 				}
 
-				if (i<size){
-					adjacent[n][i].S = array[n][i+1];
+				if (n<(size-1)){ //S
+					adjacent[n][i].S = array[n+1][i];
 				}
 				else {
 					adjacent[n][i].S = '0';
 				}
-
-				if (n<size){
-					adjacent[n][i].E = array[n+1][i];
+				if (i<(size-1)){ //E
+					adjacent[n][i].E = array[n][i+1];
 				}
 				else {
 					adjacent[n][i].E = '0';
 				}
-
-				if (n>0){
-					adjacent[n][i].W = array[n-1][i];
+				if (i>0){ //W
+					adjacent[n][i].W = array[n][i-1];
 				}
 				else {
 					adjacent[n][i].W = '0';
 				}
 
-				if (n<size && i>0){
-					adjacent[n][i].NE = array[n+1][i-1];
+				if (n>0 && i<(size-1)){
+					adjacent[n][i].NE = array[n-1][i+1];
 				}
 				else {
 					adjacent[n][i].NE = '0';
 				}
 
-				if (n>0 && i<size){
-					adjacent[n][i].NW = array[n-1][i+1];
+				if (n>0 && i>0){
+					adjacent[n][i].NW = array[n-1][i-1];
 				}
 				else {
 					adjacent[n][i].NW = '0';
 				}
 
-				if (n<size && i>0){
-					adjacent[n][i].SE = array[n+1][i-1];
+				if (n<(size-1) && i<(size-1)){
+					adjacent[n][i].SE = array[n+1][i+1];
 				}
 				else {
 					adjacent[n][i].SE = '0';
 				}
 
-				if (n<size && i<size){
+				if (n<(size-1) && i>0){
 					adjacent[n][i].SW = array[n-1][i-1];
 				}
 				else {
@@ -112,8 +110,15 @@ int main (int argc, char *argv[]){
 			}
 			printf("\n");
 		}
-		printf("%c\n", adjacent[3][2].NW);
+		printf("%c\n", adjacent[2][2].N);
 		printf("%c\n", adjacent[2][2].E);
+		printf("%c\n", adjacent[2][2].S);
+		printf("%c\n", adjacent[2][2].W);
+		printf("%c\n", adjacent[2][2].NW);
+                printf("%c\n", adjacent[2][2].NE);
+                printf("%c\n", adjacent[2][2].SW);
+                printf("%c\n", adjacent[2][2].SE);
+
 		printf("\nSize entered: %d\n", size); //print size entered
 	}
 	return 0; //exit
