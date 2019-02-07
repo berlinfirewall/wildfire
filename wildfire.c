@@ -54,61 +54,66 @@ int main (int argc, char *argv[]){
 			for (i=0; i<size; i++){ //secondary for loop with the same number //i IS COLUMNS
 				array[n][i] = genTree(perc, density); //put tree into the array
 				printf("%c", array[n][i]); //print array at that point
-				if (n>0){ //N
-					adjacent[n][i].N = array[n-1][i];
-				}
-				else {
-					adjacent[n][i].N = '0';
-				}
-
-				if (n<(size-1)){ //S
-					adjacent[n][i].S = array[n+1][i];
-				}
-				else {
-					adjacent[n][i].S = '0';
-				}
-				if (i<(size-1)){ //E
-					adjacent[n][i].E = array[n][i+1];
-				}
-				else {
-					adjacent[n][i].E = '0';
-				}
-				if (i>0){ //W
-					adjacent[n][i].W = array[n][i-1];
-				}
-				else {
-					adjacent[n][i].W = '0';
-				}
-
-				if (n>0 && i<(size-1)){
-					adjacent[n][i].NE = array[n-1][i+1];
-				}
-				else {
-					adjacent[n][i].NE = '0';
-				}
-
-				if (n>0 && i>0){
-					adjacent[n][i].NW = array[n-1][i-1];
-				}
-				else {
-					adjacent[n][i].NW = '0';
-				}
-
-				if (n<(size-1) && i<(size-1)){
-					adjacent[n][i].SE = array[n+1][i+1];
-				}
-				else {
-					adjacent[n][i].SE = '0';
-				}
-
-				if (n<(size-1) && i>0){
-					adjacent[n][i].SW = array[n-1][i-1];
-				}
-				else {
-					adjacent[n][i].SW = '0';
-				}
+					
 			}
 			printf("\n");
+		}
+		for (n=0; n<size; n++){
+			for (i=0; i<size; i++){
+				if (n>0){ //N
+                                        adjacent[n][i].N = array[n-1][i];
+                                }
+                                else {
+                                        adjacent[n][i].N = '0';
+                                }
+
+                                if (n<(size-1)){ //S
+                                        adjacent[n][i].S = array[n+1][i];
+                                }
+                                else {
+                                        adjacent[n][i].S = '0';
+                                }
+                                if (i<(size-1)){ //E
+                                        adjacent[n][i].E = array[n][i+1];
+                                }
+                                else {
+                                        adjacent[n][i].E = '0';
+                                }
+                                if (i>0){ //W
+                                        adjacent[n][i].W = array[n][i-1];
+                                }
+                                else {
+                                        adjacent[n][i].W = '0';
+                                }
+
+                                if (n>0 && i<(size-1)){
+                                        adjacent[n][i].NE = array[n-1][i+1];
+                                }
+                                else {
+                                        adjacent[n][i].NE = '0';
+                                }
+
+                                if (n>0 && i>0){
+                                        adjacent[n][i].NW = array[n-1][i-1];
+                                }
+                                else {
+                                        adjacent[n][i].NW = '0';
+                                }
+
+                                if (n<(size-1) && i<(size-1)){
+                                        adjacent[n][i].SE = array[n+1][i+1];
+                                }
+                                else {
+                                        adjacent[n][i].SE = '0';
+                                }
+
+                                if (n<(size-1) && i>0){
+                                        adjacent[n][i].SW = array[n+1][i-1];
+                                }
+                                else {
+                                        adjacent[n][i].SW = '0';
+                                }
+			}
 		}
 		printf("%c\n", adjacent[2][2].N);
 		printf("%c\n", adjacent[2][2].E);
