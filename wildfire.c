@@ -35,11 +35,11 @@ int main (int argc, char *argv[]){
 	        char SW;
 	};
 
-	if (argc < 4){ //check if user entered a command line argument
-		fputs("No argument\n", stderr);
+	if (argc < 5){ //check if user entered a command line argument
+		fputs("Too Little Arguments\nCorrect Format: ./wildfire <Size> <Percent Burning> <Density> <Iterations>\n", stderr);
 	}
-	else if (argc > 4){ //check if too many were entered
-		fputs("Too many arguments\n", stderr);
+	else if (argc > 5){ //check if too many were entered
+		fputs("Too Many Arguments\nCorrect Format: wildfire <Size> <Percent Burning> <Density> <Iterations>\n", stderr);
 	}
 	else {
 		srand(time(NULL));
@@ -47,17 +47,18 @@ int main (int argc, char *argv[]){
 		int i,n,g; //declare int for for loop
 		int size = strtol(argv[1], &p, 0); //convert the first command argument to int
 		int perc = strtol(argv[2], &p, 0); //convert the seconds command argument to int
-		int density = strtol(argv[3], &p, 0);
+		int density = strtol(argv[3], &p, 0); //convert the third command argument to int
+		int iterations = strtol(argv[4], &p, 0); //convert the fourth command argument to int
 		char array[size][size]; //create array based on what user entered
 		struct near adjacent[size][size];
 		for (n=0; n<size; n++){ //for loop, size-number of iterations //n is ROWS
 			for (i=0; i<size; i++){ //secondary for loop with the same number //i IS COLUMNS
 				array[n][i] = genTree(perc, density); //put tree into the array
 				printf("%c", array[n][i]); //print array at that point
-					
 			}
 			printf("\n");
 		}
+		printf ("Initial Iteration\n");
 		for (n=0; n<size; n++){
 			for (i=0; i<size; i++){
 				if (n>0){ //N
@@ -115,16 +116,48 @@ int main (int argc, char *argv[]){
                                 }
 			}
 		}
-		printf("%c\n", adjacent[2][2].N);
-		printf("%c\n", adjacent[2][2].E);
-		printf("%c\n", adjacent[2][2].S);
-		printf("%c\n", adjacent[2][2].W);
-		printf("%c\n", adjacent[2][2].NW);
-                printf("%c\n", adjacent[2][2].NE);
-                printf("%c\n", adjacent[2][2].SW);
-                printf("%c\n", adjacent[2][2].SE);
-
-		printf("\nSize entered: %d\n", size); //print size entered
+		for (g=0; g<iterations; g++){
+			for (n=0; n<size; n++){
+				for (i=0; i<size; i++){
+					if (array[n][i] == "*"){
+                                                array[n][i] = "_";
+                                        }
+					else if (array[n][i] == "Y"){
+						if (adjacent[n][i].N == "*" && (adjacent[n][i].S == "*" || adjacent[n][i].E == "*" || adjacent[n][i].W == "*" || adjacent[n][i].NW == "*" || adjacent[n][i].NE == "*" || adjacent[n][i].SW == "*" || adjacent[n][i].SE == "*")){
+							array[n][i] = "*";
+						}
+						else if (adjacent[n][i].S == "*" && (adjacent[n][i].N == "*" || adjacent[n][i].E == "*" || adjacent[n][i].W == "*" || adjacent[n][i].NW == "*" || adjacent[n][i].NE == "*" || adjacent[n][i].SW == "*" || adjacent[n][i].SE == "*")){
+                                        	        array[n][i] = "*";
+                                        	}
+						else if (adjacent[n][i].E == "*" && (adjacent[n][i].N == "*" || adjacent[n][i].S == "*" || adjacent[n][i].W == "*" || adjacent[n][i].NW == "*" || adjacent[n][i].NE == "*" || adjacent[n][i].SW == "*" || adjacent[n][i].SE == "*")){
+                                        	        array[n][i] = "*";
+                                        	}
+						else if (adjacent[n][i].W == "*" && (adjacent[n][i].N == "*" || adjacent[n][i].E == "*" || adjacent[n][i].S == "*" || adjacent[n][i].NW == "*" || adjacent[n][i].NE == "*" || adjacent[n][i].SW == "*" || adjacent[n][i].SE == "*")){
+                                        	        array[n][i] = "*";
+                                        	}
+						else if (adjacent[n][i].NW == "*" && (adjacent[n][i].N == "*" || adjacent[n][i].S == "*" || adjacent[n][i].E == "*" || adjacent[n][i].W == "*" || adjacent[n][i].NE == "*" || adjacent[n][i].SW == "*" || adjacent[n][i].SE == "*")){
+                                        	        array[n][i] = "*";
+                                        	}
+						else if (adjacent[n][i].NE == "*" && (adjacent[n][i].N == "*" || adjacent[n][i].S == "*" || adjacent[n][i].E == "*" || adjacent[n][i].NW == "*" || adjacent[n][i].W == "*" || adjacent[n][i].SW == "*" || adjacent[n][i].SE == "*")){
+                                        	        array[n][i] = "*";
+                                        	}
+						else if (adjacent[n][i].SW == "*" && (adjacent[n][i].N == "*" || adjacent[n][i].S == "*" || adjacent[n][i].E == "*" || adjacent[n][i].NW == "*" || adjacent[n][i].NE == "*" || adjacent[n][i].W == "*" || adjacent[n][i].SE == "*")){
+                                        	        array[n][i] = "*";
+                                        	}
+						else if (adjacent[n][i].SE == "*" && (adjacent[n][i].S == "*" || adjacent[n][i].E == "*" || adjacent[n][i].W == "*" || adjacent[n][i].NW == "*" || adjacent[n][i].NE == "*" || adjacent[n][i].SW == "*" || adjacent[n][i].W == "*")){
+                                        	        array[n][i] = "*";
+                                        	}
+					}
+					array[n][i] = genTree(perc, density); //put tree into the array
+		                	printf("%c", array[n][i]); //print array at that point
+				}
+				printf("\n"); 
+			}
+			printf ("Iterations: %d\n\n", g);
+		}
+        	printf("\nSize entered: %d\n", size); //print size entered
 	}
 	return 0; //exit
 }
+
+
